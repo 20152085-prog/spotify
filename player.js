@@ -1,12 +1,19 @@
 // ========== CANCIONES ==========
 const songs = [
-    { id: 0, title: "BEBE", artist: "6ix9ine ft. Anuel AA", src: "musica/bebe.mp3", emoji: "🔥", color: "#c77dff" },
-    { id: 1, title: "MALA", artist: "6ix9ine", src: "musica/MALA.mp3", emoji: "🌊", color: "#7b2cbf" },
+    { id: 0, title: "BEBE", artist: "6ix9ine ft. Anuel AA", src: "bebe.mp3", emoji: "🔥", color: "#c77dff" },
+    { id: 1, title: "MALA", artist: "6ix9ine", src: "MALA.mp3", emoji: "🌊", color: "#7b2cbf" },
+    { id: 2, title: "Debi tirar mas fotos", artist: "Bad Bunny", src: "Dbtmf.mp3", emoji: "🎵", color: "#9d4edd" },
+    { id: 3, title: "Armas y fuego", artist: "Chuy Montana", src: "arma.mp3", emoji: "🎤", color: "#c0355a" },
+    { id: 4, title: "Mia", artist: "Drake", src: "mia.mp3", emoji: "🎸", color: "#4361ee" },
+];
 
-    { id: 2, title: "Debi tirar mas fotos", artist: "badbuny", src: "musica/Dbtmf.mp3", emoji: "🎵", color: "#9d4edd" },
-    { id: 3, title: "Armas y fuego", artist: "chuy montana", src: "musica/arma.mp3", emoji: "🎤", color: "#c0355a" },
-    { id: 4, title: "Mia", artist: "drake", src: "musica/mia.mp3", emoji: "🎸", color: "#4361ee" },
-  
+// ========== RECIENTES ==========
+const recentItems = [
+    { title: "BEBE", subtitle: "6ix9ine ft. Anuel AA", emoji: "🔥", color: "#c77dff", songId: 0 },
+    { title: "MALA", subtitle: "6ix9ine", emoji: "🌊", color: "#7b2cbf", songId: 1 },
+    { title: "Debi tirar mas fotos", subtitle: "Bad Bunny", emoji: "🎵", color: "#9d4edd", songId: 2 },
+    { title: "Armas y fuego", subtitle: "Chuy Montana", emoji: "🎤", color: "#c0355a", songId: 3 },
+    { title: "Mia", subtitle: "Drake", emoji: "🎸", color: "#4361ee", songId: 4 },
 ];
 
 const audio = new Audio();
