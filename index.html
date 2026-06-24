@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Spotify Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-gradient"></div>
+
+<!-- ══ HOME ══ -->
+<div id="view-home" class="view-section main-content">
+    <div class="top-header">
+        <div class="header-left">
+            <button class="icon-circle">←</button>
+            <button class="icon-circle">→</button>
+        </div>
+        <div class="header-right">
+            <button class="icon-circle">🔍</button>
+            <button class="user-avatar">👤</button>
+        </div>
+    </div>
+    <div class="greeting" id="greetingText">Buenas tardes</div>
+    <div class="recent-grid" id="recentGrid"></div>
+    <section class="playlist-row">
+        <div class="row-header"><h2>Creado para ti</h2><button class="show-all">Mostrar todo</button></div>
+        <div class="horizontal-scroll" id="forYouRow"></div>
+    </section>
+    <section class="playlist-row">
+        <div class="row-header"><h2>Popular</h2><button class="show-all">Mostrar todo</button></div>
+        <div class="horizontal-scroll" id="popularRow"></div>
+    </section>
+    <section class="playlist-row">
+        <div class="row-header"><h2>Álbumes destacados</h2><button class="show-all">Mostrar todo</button></div>
+        <div class="horizontal-scroll" id="albumsRow"></div>
+    </section>
+    <div class="ad-card">
+        <div class="ad-info">
+            <div class="ad-icon">🎵</div>
+            <div><div class="ad-title">POP CON FLOW</div><div class="ad-subtitle">@TOPSPY</div></div>
+        </div>
+        <div class="ad-right">
+            <span>ESCÚCHALO EN</span>
+            <button class="ad-btn">Topsify Music</button>
+        </div>
+    </div>
+    <section class="playlist-row">
+        <div class="row-header"><h2>Viernes de lanzamientos</h2><button class="show-all">Mostrar todo</button></div>
+        <div class="horizontal-scroll" id="fridayRow"></div>
+    </section>
+</div>
+
+<!-- ══ BUSCAR ══ -->
+<div id="view-search" class="view-section main-content" style="display:none">
+    <div class="top-header">
+        <h1 style="font-size:24px;font-weight:700">Buscar</h1>
+    </div>
+    <div class="search-box-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="searchInput" class="search-box" type="text"
+            placeholder="Artistas, canciones o podcasts"
+            oninput="doSearch(this.value)"/>
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none">✕</button>
+    </div>
+    <div id="searchResults" style="display:none">
+        <p style="color:#b3b3b3;font-size:13px;margin-bottom:12px">Resultados</p>
+        <div id="searchList"></div>
+        <div id="searchEmpty" style="display:none;text-align:center;padding:40px 0;color:#b3b3b3">
+            <div style="font-size:40px;margin-bottom:8px">🔎</div>
+            <span></span>
+        </div>
+    </div>
+    <div id="searchDefault">
+        <p style="color:#b3b3b3;font-size:13px;margin-bottom:14px">Tus canciones</p>
+        <div id="allSongsList"></div>
+    </div>
+</div>
+
+<!-- ══ BIBLIOTECA ══ -->
+<div id="view-library" class="view-section main-content" style="display:none">
+    <div class="top-header">
+        <h1 style="font-size:24px;font-weight:700">Tu biblioteca</h1>
+        <button class="icon-circle" onclick="showView('create')" title="Nueva playlist">＋</button>
+    </div>
+    <div id="libraryList"></div>
+</div>
+
+<!-- ══ CREAR ══ -->
+<div id="view-create" class="view-section main-content" style="display:none">
+    <div class="top-header">
+        <button class="icon-circle" onclick="showView('library')">←</button>
+        <h1 style="font-size:20px;font-weight:700">Nueva playlist</h1>
+        <div style="width:36px"></div>
+    </div>
+    <div id="createSection"></div>
+</div>
+
+<!-- ══ DETALLE PLAYLIST ══ -->
+<div id="view-playlist" class="view-section main-content" style="display:none">
+    <div class="top-header">
+        <button class="icon-circle" onclick="showView('library')">←</button>
+        <h1 style="font-size:20px;font-weight:700">Playlist</h1>
+        <div style="width:36px"></div>
+    </div>
+    <div id="playlistDetail"></div>
+</div>
+
+<!-- ══ MINI PLAYER ══ -->
+<div class="mini-player" id="miniPlayer" onclick="openPlayer()">
+    <div class="mini-left">
+        <div class="mini-cover" id="miniCover">🎵</div>
+        <div class="mini-info">
+            <div id="miniTitle">BEBE</div>
+            <div id="miniArtist">6ix9ine</div>
+        </div>
+        <button class="mini-like" id="miniLikeBtn">♡</button>
+    </div>
+    <div class="mini-controls">
+        <button onclick="event.stopPropagation();prevSong()">⏮</button>
+        <button class="mini-play" id="miniPlayBtn" onclick="event.stopPropagation();togglePlayPause()">▶</button>
+        <button onclick="event.stopPropagation();nextSong()">⏭</button>
+    </div>
+    <div class="mini-right">
+        <span class="mini-duration" id="miniDuration">0:00</span>
+    </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<div class="bottom-nav">
+    <button class="nav-item active" data-nav="home" onclick="showView('home')">
+        <span>🏠</span><span>Inicio</span>
+    </button>
+    <button class="nav-item" data-nav="search" onclick="showView('search');renderAllSongs()">
+        <span>🔍</span><span>Buscar</span>
+    </button>
+    <button class="nav-item" data-nav="library" onclick="showView('library')">
+        <span>📚</span><span>Tu biblioteca</span>
+    </button>
+    <button class="nav-item" data-nav="create" onclick="showView('create')">
+        <span>➕</span><span>Crear</span>
+    </button>
+</div>
+
+<!-- ══ FULL PLAYER ══ -->
+<div id="fullPlayer" class="full-player">
+    <div class="full-player-container">
+        <button class="close-full" onclick="closePlayer()">✕</button>
+        <div class="full-art" id="fullArt">🎵</div>
+        <h2 id="fullTitle">BEBE</h2>
+        <p id="fullArtist">6ix9ine</p>
+        <div class="full-controls">
+            <button onclick="prevSong()">⏮</button>
+            <button class="big-play" id="fullPlayBtn" onclick="togglePlayPause()">▶</button>
+            <button onclick="nextSong()">⏭</button>
+        </div>
+        <div class="full-progress">
+            <span id="fullCurrent">0:00</span>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <span id="fullTotal">0:00</span>
+        </div>
+    </div>
+</div>
+<div class="watermark">Hecho Por Axel Jasson Reyes</div>
+
+<script src="player.js"></script>
+<script>
+// Mostrar todas las canciones en buscar (default)
+function renderAllSongs() {
+    const c = document.getElementById('allSongsList');
+    if (!c || c.innerHTML) return;
+    songs.forEach(s => {
+        const row = document.createElement('div');
+        row.className = 'lib-row';
+        row.innerHTML = `
+            <div class="lib-cover" style="background:linear-gradient(135deg,${s.color},${s.color}80)"><span>${s.emoji}</span></div>
+            <div class="lib-info"><div class="lib-title">${s.title}</div><div class="lib-sub">${s.artist}</div></div>
+            <button class="row-play-btn">▶</button>`;
+        row.onclick = () => playSong(s);
+        c.appendChild(row);
+    });
+}
+function clearSearch() {
+    const input = document.getElementById('searchInput');
+    input.value = '';
+    document.getElementById('searchResults').style.display = 'none';
+    document.getElementById('searchDefault').style.display = 'block';
+    document.getElementById('searchClear').style.display = 'none';
+}
+document.getElementById('searchInput').addEventListener('input', function() {
+    const clear = document.getElementById('searchClear');
+    const def = document.getElementById('searchDefault');
+    clear.style.display = this.value ? 'block' : 'none';
+    def.style.display = this.value ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
