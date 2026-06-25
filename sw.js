@@ -1,14 +1,14 @@
 const CACHE = 'spotify-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/player.js',
-  '/styles.css',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/music/bebe.mp3',
-  '/music/MALA.mp3'
+  './',
+  './index.html',
+  './player.js',
+  './styles.css',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './music/bebe.mp3',
+  './music/MALA.mp3'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(
