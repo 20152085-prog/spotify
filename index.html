@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#9d4edd">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icon-192.png">
     <title>Spotify Web</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -169,7 +169,6 @@
 
 <script src="player.js"></script>
 <script>
-// Mostrar todas las canciones en buscar (default)
 function renderAllSongs() {
     const c = document.getElementById('allSongsList');
     if (!c || c.innerHTML) return;
@@ -199,12 +198,11 @@ document.getElementById('searchInput').addEventListener('input', function() {
 });
 </script>
 
-<!-- ══ PWA: INSTALAR + SERVICE WORKER ══ -->
+<!-- ══ PWA ══ -->
 <script>
 let deferredPrompt = null;
 const installBtn = document.getElementById('installBtn');
 
-// Chrome/Edge/Android disparan este evento si la PWA es instalable
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -216,22 +214,19 @@ installBtn.addEventListener('click', async () => {
     installBtn.style.display = 'none';
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    console.log('Resultado instalación:', outcome);
     deferredPrompt = null;
 });
 
-// Si ya se instaló (o se instala), ocultar el botón
 window.addEventListener('appinstalled', () => {
     installBtn.style.display = 'none';
     deferredPrompt = null;
 });
 
-// Registrar el service worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registrado, scope:', reg.scope))
-            .catch(err => console.error('Error registrando SW:', err));
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('SW registrado:', reg.scope))
+            .catch(err => console.error('Error SW:', err));
     });
 }
 </script>
